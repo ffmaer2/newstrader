@@ -2,7 +2,7 @@
 # Remember: stem the words
 
 class Sentiment:  
-  def sentimentVectorize(self):
+  def sentimentVectorize(self, reuterVector):
     print 'Vectorizing sentiment..'
     sentiment = []
     

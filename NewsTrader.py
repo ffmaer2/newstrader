@@ -21,29 +21,35 @@ Here we control everything:
 from ReutersQuery import ReutersQuery
 from Sentiment import Sentiment
 from YahooQuery import YahooQuery
+from DateFormat import DateFormat
 from Merge import Merge
 from Strategy import Strategy
 from Output import Output
 
 def main():
-  ticker = raw_input("Welcome. Ready to trade? Pick a stock ticker: ")
-  reuterObj = ReutersQuery()
-  reuterVector = reuterObj.getQuery(ticker)
+	ticker = raw_input("Welcome. Ready to trade? Pick a stock ticker: ")
+	reuterObj = ReutersQuery()
+	reuterVector = reuterObj.getQuery(ticker)
+	print len(reuterVector)
   
-  sentimentObj = Sentiment()
-  sentiment = sentimentObj.sentimentVectorize()
+	sentimentObj = Sentiment()
+	sentiment = sentimentObj.sentimentVectorize(reuterVector)
 
-  yahooObj = YahooQuery()
-  yahooVector = yahooObj.doYahooQuery()
+	yahooObj = YahooQuery()
+	yahooVector = yahooObj.doYahooQuery(ticker, reuterVector)
+	print yahooVector
 
-  mergeObj = Merge()
-  finaldata = mergeObj.mergeSentimentsAndPrices()
+	reuterDates = DateFormat()
+	fixedReuterVector = reuterDates.fixDates(reuterVector)
 
-  strategyObj = Strategy()
-  strategyObj.runStrategy(ticker)
+	mergeObj = Merge()
+	finaldata = mergeObj.mergeSentimentsAndPrices()
 
-  outputObj = Output()
-  outputObj.getQuery(ticker)
+	strategyObj = Strategy()
+	strategyObj.runStrategy(ticker)
+
+	outputObj = Output()
+	outputObj.getQuery(ticker)
 
 
 

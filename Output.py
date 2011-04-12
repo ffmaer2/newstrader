@@ -5,4 +5,4 @@ class Output:
   def getQuery(self, ticker):
     print 'Plotting results..'
     we = Plot()
-    we.plotthisfucker()
+    we.plotThisFucker()
