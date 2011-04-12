@@ -30,14 +30,16 @@ def main():
 	ticker = raw_input("Welcome. Ready to trade? Pick a stock ticker: ")
 	reuterObj = ReutersQuery()
 	reuterVector = reuterObj.getQuery(ticker)
-	print len(reuterVector)
+#	print len(reuterVector)
   
 	sentimentObj = Sentiment()
 	sentiment = sentimentObj.sentimentVectorize(reuterVector)
+#	print len(sentiment)
+#	Should be same as print len(reuterVector)
 
 	yahooObj = YahooQuery()
 	yahooVector = yahooObj.doYahooQuery(ticker, reuterVector)
-	print yahooVector
+	print len(yahooVector)
 
 	reuterDates = DateFormat()
 	fixedReuterVector = reuterDates.fixDates(reuterVector)

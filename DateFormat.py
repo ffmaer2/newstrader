@@ -5,7 +5,6 @@ class DateFormat:
 	def fixDates(self, reuterVector):
 		print 'Fixing reuter dates..'
 		index = 0
-		index2 = 1
 		newReuterVector = []
 		for result in reuterVector:
 			reuterDate = str(reuterVector[index][0])
