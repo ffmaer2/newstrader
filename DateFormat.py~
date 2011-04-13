@@ -9,7 +9,8 @@ class DateFormat:
     for result in reuterVector:
       reuterDate = str(reuterVector[index][0])
       reuterFixedDate = reuterDate[0:10]
+      toAdd = reuterFixedDate
       # Each date corresponds to an article and a sentiment on that article
-      newReuterVector.append(reuterFixedDate)
+      newReuterVector.append(toAdd)
       index += 1
     return newReuterVector

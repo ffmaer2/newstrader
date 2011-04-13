@@ -47,14 +47,13 @@ def getSentiment(reuterVector, lowNegWords, lowPosWords):
     sentraw = (float(poscount) - float(negcount)) / ((poscount))    
     sentiment.append(sentraw)
     count += 1
-    print '#' + str(count)
+    print 'Generating sentiment for article ' + str(count)
   return sentiment
 
 
 class Sentiment:  
   def sentimentVectorize(self, reuterVector):
     print 'Vectorizing sentiment..'
-    print 'Generating sentiment for article:'
     posl = getPosWords()
     negl = getNegWords()
     sentiment = getSentiment(reuterVector, negl, posl)

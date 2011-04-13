@@ -5,7 +5,5 @@ from RunStrategy import RunStrategy
 from StrategyMetrics import StrategyMetrics
 
 class Strategy:
-  def runStrategy(self, ticker, finaldata):
+  def runStrategy(self, ticker):
     print 'Running strategy on ' + ticker + '..'  
-    
-    
