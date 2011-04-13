@@ -1,4 +1,4 @@
-# Query the Reuters database
+# Calculates position
 class Position:
-  def getQuery(self, ticker):
-    print 'Your ticker is ' + ticker
+  def getPosition(self, ticker):
+    print 'Running -> ' + __name__

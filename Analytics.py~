@@ -13,7 +13,6 @@ def correlateLagged(s, p, da):
     d[da[i]] = pearsonr(s[0:len(s)-dayLag], p[dayLag:len(s)])[0]
     correlation.append(pearsonr(s[0:len(s)-dayLag], p[dayLag:len(s)]))
     i += 1
-  print d
   return correlation
 
 

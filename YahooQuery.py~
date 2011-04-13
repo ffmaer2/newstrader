@@ -2,7 +2,8 @@
 # Query the Yahoo Finance database for historical prices of the ticker
 ######################################################################
 
-
+# BIG ISSUE: Yahoo won't let you query more than ~130 dates
+# Workaround: 
 
 ########## START YAHOO QUERY CODE ############
 #!/usr/bin/env python
