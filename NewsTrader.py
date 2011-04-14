@@ -46,7 +46,6 @@ def main():
 
   mergeObj = Merge()
   finaldata = mergeObj.mergeEverything(sentiments, yahooVector, dates)
-  print finaldata
 
   strategyObj = Strategy()
   strategyObj.runStrategy(ticker, finaldata)

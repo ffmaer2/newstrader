@@ -38,17 +38,19 @@ def getSentiment(reuterVector, lowNegWords, lowPosWords):
 
     # count frequencies
     for negword in lowNegWords:
-      if negword in wordsinarticle:
+      if re.search(re.compile(negword), article[1]) != None:
 	negcount += 1
     for posword in lowPosWords:
       if re.search(re.compile(posword), article[1]) != None:
 	poscount += 1    
 
     # sentiment - 0% is neutral
-    sentraw = (float(poscount) - float(negcount)) / ((poscount))  
+    sentraw = (float(poscount) - float(negcount)) / (poscount)
     sentiment.append(sentraw)
     count += 1
     print '#' + str(count)
+    
+  print sentiment
   return sentiment
 
 

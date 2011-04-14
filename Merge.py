@@ -33,8 +33,8 @@ def mergeDatesAndAverageSentiment(sentiments, dates):
     index += 1
   
   #Index and totalcount should be the same!
-  print index
-  print totalcount
+  #print index
+  #print totalcount
   
   # Fixed
   return dict( (n, d.get(n, 0) / e.get(n, 0)) for n in set(d)|set(e) )
@@ -67,4 +67,5 @@ class Merge:
     datesSentimentsR = mergeDatesAndAverageSentiment(sentiments, dates)
     pricesR = getPricesReady(yahooVector) # We're all good here
     merged = mergeDatesSentimentsAndPrices(datesSentimentsR, pricesR)
+    print len(merged)
     return sort(merged)

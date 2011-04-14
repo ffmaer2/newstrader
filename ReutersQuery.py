@@ -7,8 +7,9 @@ class ReutersQuery:
 
     print 'Querying..'
     
+    # Max without yahoo spazzing is 140ish
     # It would be nice to let the user enter in how many stories to query.
-    queryText = """select top 100 story_date_time, cast(take_text as text) from Reuters.dbo.news where related_rics like '%""" + ticker + """%' and language = 'en' and event_type = 'STORY_TAKE_OVERWRITE'"""
+    queryText = """select top 200 story_date_time, cast(take_text as text) from Reuters.dbo.news where related_rics like '%""" + ticker + """%' and language = 'en' and event_type = 'STORY_TAKE_OVERWRITE'"""
     
     conn = pymssql.connect(host='vpanos.stern.nyu.edu:1433', user='devel', password='developer', database='Reuters')
     cursor = conn.cursor()

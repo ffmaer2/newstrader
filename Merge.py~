@@ -16,7 +16,7 @@ def mergeDatesAndAverageSentiment(sentiments, dates):
   # dict of counts
   e = defaultdict(float)
 
-  #This is messed up
+  # Fixed
   for date in dates:
     if date not in d and len(d) == 0:
       count = 1
@@ -31,12 +31,13 @@ def mergeDatesAndAverageSentiment(sentiments, dates):
     d[date] += sentiments[index]
     #print date, d[date], sentiments[index]
     index += 1
+    print totalcount
   
   #Index and totalcount should be the same!
-  print index
-  print totalcount
+  #print index
+  #print totalcount
   
-  # Here is screwed up as well
+  # Fixed
   return dict( (n, d.get(n, 0) / e.get(n, 0)) for n in set(d)|set(e) )
 
 
@@ -67,4 +68,5 @@ class Merge:
     datesSentimentsR = mergeDatesAndAverageSentiment(sentiments, dates)
     pricesR = getPricesReady(yahooVector) # We're all good here
     merged = mergeDatesSentimentsAndPrices(datesSentimentsR, pricesR)
+    print len(merged)
     return sort(merged)

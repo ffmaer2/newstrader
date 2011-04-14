@@ -2,8 +2,13 @@
 # Query the Yahoo Finance database for historical prices of the ticker
 ######################################################################
 
-# BIG ISSUE: Yahoo won't let you query more than ~130 dates
+# BIG ISSUE: Yahoo won't let you query more than ~140 dates
 # Workaround: break into separate queries, and append.
+
+from datetime import datetime
+from datetime import timedelta
+from datetime import date
+
 
 ########## START YAHOO QUERY CODE ############
 #!/usr/bin/env python
@@ -168,15 +173,48 @@ def get_historical_prices(symbol, start_date, end_date):
 
 ########## END YAHOO QUERY CODE ############
 
-def getStartDate(reuterVector):
-  firstDate = str(reuterVector[0][0])
-  yahooStartDate = firstDate[0:4] + firstDate[5:7] + firstDate[8:10]
-  return yahooStartDate
 
-def getEndDate(reuterVector):
+# 1. First see the difference between the dates
+#	If query length <= 100, run whatever's there.
+#	Else, we need to split the query, run them separately, then stitch together.
+# 2. Return only the list of only Date and Close.
+
+
+def toSplitYahoo(reuterVector):
+  print reuterVector[len(reuterVector)-1][0] - reuterVector[0][0], timedelta(days=100)
+  if reuterVector[len(reuterVector)-1][0] - reuterVector[0][0] > timedelta(days=100):
+    return True
+  return False
+
+
+#segFirstDate = datetime.min
+#segEndDate = datetime.min
+#i = 0
+
+################### In case we don't need to split ###################
+def getFirstDate(reuterVector):
+  firstDate = str(reuterVector[0][0])
+  yahooFirstDate = firstDate[0:4] + firstDate[5:7] + firstDate[8:10]
+  return yahooFirstDate
+
+def getLastDate(reuterVector):
   lastDate = str(reuterVector[len(reuterVector)-1][0])
   yahooLastDate = lastDate[0:4] + lastDate[5:7] + lastDate[8:10]
   return yahooLastDate
+############################# End case ###############################
+
+################### In case we DO need to split ###################
+#def splitQuery(reuterVector):
+#  if i == 0:
+#    segFirstDate = reuterVector[0][0]
+#    segEndDate = reuterVector[len(reuterVector)-1][0]
+  # segFirstDate = getFirstDate(reuterVector) only the first time.
+  # 	otherwise, segFirstDate = segEndDate
+  # segEndDate = segFirstDate + 100 
+#  print 'hi'
+############################# End case ###############################
+
+
 
 def onlyDateAndClose(historicalPrices):
   fixedDateAndClose = []
@@ -185,17 +223,29 @@ def onlyDateAndClose(historicalPrices):
     toAdd = historicalPrices[index][0], historicalPrices[index][4]
     fixedDateAndClose.append(toAdd)
     index += 1
-  print fixedDateAndClose
   return fixedDateAndClose
+
 
 class YahooQuery:
   def doYahooQuery(self, ticker, reuterVector):
     print 'Querying historical prices from Yahoo Finance..'
-    startDate = getStartDate(reuterVector)
-    endDate = getEndDate(reuterVector)
-    historicalPrices = get_historical_prices(ticker, startDate, endDate)
-    # historicalPrices in the form [x][y]. Note they start at index 1. Index 0 is the header, Date.
-    print 'Price query done.'
     
+
+    #if toSplitYahoo(reuterVector) is False:
+    startDate = getFirstDate(reuterVector)
+    endDate = getLastDate(reuterVector)
+    historicalPrices = get_historical_prices(ticker, startDate, endDate)
+      # historicalPrices in the form [x][y]. Note they start at index 1. Index 0 is the header, Date.
+    #else:
+      # Now we have to split the query
+    #  while segEndDate < reuterVector[len(reuterVector)-1][0]:
+	#print 'hi'
+	#splitQuery(reuterVector)
+	# get_historical_prices(ticker, segFirstDate, segEndDate)
+	# Update segFirstDate
+	# Update segEndDate
+
+
+    print 'Price query done.'
     return onlyDateAndClose(historicalPrices)
 
