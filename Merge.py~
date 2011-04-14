@@ -3,32 +3,41 @@
 ###################################################################################################
 
 from collections import *
-
-
-
-
-
-
+from OrderedDict import OrderedDict
 
 # We're getting the sentiments matched up with the dates of the articles they correspond to.
 def mergeDatesAndAverageSentiment(sentiments, dates):
   count = 1
   index = 0
+  totalcount = 0
   
+  # dict of sentiments
   d = defaultdict(float)
+  # dict of counts
   e = defaultdict(float)
 
+  #This is messed up
   for date in dates:
-    sentsum = sentiments[index]
-    if date in d:
+    if date not in d and len(d) == 0:
+      count = 1
+    elif date in d:
       count += 1
+      if index == len(dates)-1:
+	totalcount += count
     else:
+      totalcount += count
       count = 1
     e[date] = count
-    d[date] += sentsum
+    d[date] += sentiments[index]
+    #print date, d[date], sentiments[index]
     index += 1
   
-  return dict( [ (n, d.get(n, 0) / e.get(n, 0)) for n in set(d)|set(e) ] )
+  #Index and totalcount should be the same!
+  print index
+  print totalcount
+  
+  # Here is screwed up as well
+  return dict( (n, d.get(n, 0) / e.get(n, 0)) for n in set(d)|set(e) )
 
 
 def getPricesReady(yahooVector):
@@ -48,15 +57,14 @@ def mergeDatesSentimentsAndPrices(datesSentimentsR, pricesR):
   
 
 def sort(merged):
-  d = OrderedDict()
-  d = (sorted(merged.items()))
-  return dict(sorted(merged.items()))
+  e = OrderedDict(sorted(merged.items()))
+  return e
   
 
 class Merge:
   def mergeEverything(self, sentiments, yahooVector, dates):
     print 'Merging sentiment and price vectors..'
     datesSentimentsR = mergeDatesAndAverageSentiment(sentiments, dates)
-    pricesR = getPricesReady(yahooVector)
+    pricesR = getPricesReady(yahooVector) # We're all good here
     merged = mergeDatesSentimentsAndPrices(datesSentimentsR, pricesR)
     return sort(merged)

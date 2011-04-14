@@ -181,10 +181,10 @@ def getEndDate(reuterVector):
 def onlyDateAndClose(historicalPrices):
   fixedDateAndClose = []
   index = 1
-  while index < len(historicalPrices)-1:
-    index += 1
+  while index < len(historicalPrices):
     toAdd = historicalPrices[index][0], historicalPrices[index][4]
     fixedDateAndClose.append(toAdd)
+    index += 1
   return fixedDateAndClose
 
 class YahooQuery:
@@ -195,5 +195,6 @@ class YahooQuery:
     historicalPrices = get_historical_prices(ticker, startDate, endDate)
     # historicalPrices in the form [x][y]. Note they start at index 1. Index 0 is the header, Date.
     print 'Price query done.'
+    
     return onlyDateAndClose(historicalPrices)
 

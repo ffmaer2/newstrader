@@ -9,8 +9,7 @@ class Strategy:
     print 'Running strategy on ' + ticker + '..'  
     
     # First, do analytics to figure out how to execute the strategy.
-    # Return lagged correlations and 10dayMA of those lagged correlations.
-    print finaldata
+    # Return lagged correlations and (10dayMA) of those lagged correlations.
     analyticsObj = Analytics()
     correlations = analyticsObj.getAnalytics(ticker, finaldata)
     
@@ -18,7 +17,7 @@ class Strategy:
     # Take 10dayMA and take a position.
     # Short thresh = ; long thresh = 
     positionObj = Position()
-    positions = positionObj.getPosition(ticker)
+    positions = positionObj.getPosition(ticker, correlations)
     
     # Third, run the strategy!
     # Return a performance list (with dates?)

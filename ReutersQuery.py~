@@ -3,7 +3,7 @@ import pymssql
 
 class ReutersQuery:  
   def getQuery(self, ticker):
-    num = raw_input("How many articles do you want to get? Keep it between 10 and 200: ")
+    #num = raw_input("How many articles do you want to get? Keep it between 10 and 200: ")
 
     print 'Querying..'
     
