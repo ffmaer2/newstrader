@@ -19,13 +19,14 @@ class Position:
       p.append(newdata[i][1][1])
       r.append(newdata[i][1][2])
       ma.append(newdata[i][1][3])
-      if ma[i] > 0.08:
+      if ma[i] > 0.3:
 	pos.append(1)
       elif ma[i] < -0.04:
 	pos.append(-1)
       else:
 	pos.append(0)
       s_p_r_ma_pos[date] = s[i], p[i], r[i], ma[i], pos[i]
+      #print s_p_r_ma_pos[date]
       i += 1
     
     return s_p_r_ma_pos

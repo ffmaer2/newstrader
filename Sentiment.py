@@ -50,7 +50,6 @@ def getSentiment(reuterVector, lowNegWords, lowPosWords):
     count += 1
     print '#' + str(count)
     
-  print sentiment
   return sentiment
 
 

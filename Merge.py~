@@ -31,7 +31,6 @@ def mergeDatesAndAverageSentiment(sentiments, dates):
     d[date] += sentiments[index]
     #print date, d[date], sentiments[index]
     index += 1
-    print totalcount
   
   #Index and totalcount should be the same!
   #print index

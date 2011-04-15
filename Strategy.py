@@ -27,3 +27,4 @@ class Strategy:
     # Fourth, determine the metrics.
     metricsObj = StrategyMetrics()
     metrics = metricsObj.getStrategyMetrics(ticker, strategyResults)
+    return metrics

@@ -37,7 +37,6 @@ def main():
 
   sentimentObj = Sentiment()
   sentiments = sentimentObj.sentimentVectorize(reuterVector)
-  print sentiments
 
   yahooObj = YahooQuery()
   yahooVector = yahooObj.doYahooQuery(ticker, reuterVector)
@@ -47,13 +46,12 @@ def main():
 
   mergeObj = Merge()
   finaldata = mergeObj.mergeEverything(sentiments, yahooVector, dates)
-  print finaldata
 
   strategyObj = Strategy()
-  strategyObj.runStrategy(ticker, finaldata)
+  metrics = strategyObj.runStrategy(ticker, finaldata)
 
   outputObj = Output()
-  outputObj.getQuery(ticker)
+  outputObj.getQuery(ticker, metrics)
 
 
 

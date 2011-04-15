@@ -1,13 +1,15 @@
 # Query the Reuters database
 import pymssql
-
 from datetime import datetime, timedelta
 import time
 from time import mktime
 
-#num = raw_input("How many articles do you want to get? Keep it between 10 and 200: ")
+
 
 print 'Querying..'
+conn = pymssql.connect(host='vpanos.stern.nyu.edu:1433', user='devel', password='developer', database='Reuters')
+cursor = conn.cursor()
+
 ticker = 'WMT'
 results = []
 
@@ -22,26 +24,33 @@ print timedelta(days=5)
 
 startStrip = time.strptime(start[:10], "%Y-%m-%d")
 endStrip = time.strptime(end[:10], "%Y-%m-%d")
-startObj = datetime(mktime(startObj))
-endObj = datetime(mktime(endObj))
+startObj = datetime.fromtimestamp(mktime(startStrip))
+endObj = datetime.fromtimestamp(mktime(endStrip))
 print endObj - startObj
 
-#print datetime(*start[:6])
+startSeg = startObj
 
-queryText = """select story_date_time, cast(take_text as text) from Reuters.dbo.news where related_rics like '%""" + ticker + """%' and language = 'en' and event_type = 'STORY_TAKE_OVERWRITE' and story_date_time >= '""" + start + """' and story_date_time <= '""" + end + """'"""
+while startSeg < endObj:
+  startSegStr = str(startSeg)[:10]
+  startSeg += timedelta(days=3)
+  endSegStr = str(startSeg)[:10]
 
-conn = pymssql.connect(host='vpanos.stern.nyu.edu:1433', user='devel', password='developer', database='Reuters')
-cursor = conn.cursor()
-cursor.execute(queryText)
+  queryText = """select story_date_time, cast(take_text as text) from Reuters.dbo.news where related_rics like '%""" + ticker + """%' and language = 'en' and event_type = 'STORY_TAKE_OVERWRITE' and story_date_time >= '""" + startSegStr + """' and story_date_time <= '""" + endSegStr + """'"""
+  
+  print '\nGETTING ARTICLES BETWEEN ' + startSegStr + ' AND ' + endSegStr + '\n'
+  cursor.execute(queryText)
 
-row = cursor.fetchone()
-while row:
-  toAdd = (row[0], row[1][0:10])
-  print toAdd
-  results.append(toAdd)
-  row = cursor.fetchone()
+  batch = cursor.fetchall()
+  results.append(batch)
+  print batch
 
-print results
+  #row = cursor.fetchone()
+  #while row:
+  #  toAdd = (row[0], row[1][0:10])
+  #  results.append(toAdd)
+  #  row = cursor.fetchone()
+
+
 conn.close()
 
 print 'Query done!'

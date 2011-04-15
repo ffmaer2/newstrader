@@ -49,7 +49,6 @@ def getSentiment(reuterVector, lowNegWords, lowPosWords):
     sentiment.append(sentraw)
     count += 1
     print '#' + str(count)
-    print totalcount
     
   print sentiment
   return sentiment

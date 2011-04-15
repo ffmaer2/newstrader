@@ -48,10 +48,10 @@ def main():
   finaldata = mergeObj.mergeEverything(sentiments, yahooVector, dates)
 
   strategyObj = Strategy()
-  strategyObj.runStrategy(ticker, finaldata)
+  metrics = strategyObj.runStrategy(ticker, finaldata)
 
   outputObj = Output()
-  outputObj.getQuery(ticker)
+  outputObj.putOutput(ticker, metrics)
 
 
 
