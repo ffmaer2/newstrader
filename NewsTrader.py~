@@ -51,7 +51,7 @@ def main():
   metrics = strategyObj.runStrategy(ticker, finaldata)
 
   outputObj = Output()
-  outputObj.getQuery(ticker, metrics)
+  outputObj.putOutput(ticker, metrics, yahooVector, finaldata)
 
 
 

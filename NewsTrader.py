@@ -51,9 +51,7 @@ def main():
   metrics = strategyObj.runStrategy(ticker, finaldata)
 
   outputObj = Output()
-  outputObj.putOutput(ticker, metrics)
-
-
+  outputObj.putOutput(ticker, metrics, yahooVector, finaldata)
 
 
 if __name__ == "__main__":

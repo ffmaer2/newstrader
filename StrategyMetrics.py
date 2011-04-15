@@ -49,7 +49,6 @@ def getAveWinLoss(strategyResults):
 
 def getExpectancy(winLoss, aveWinLoss):
   expectancy = (aveWinLoss[0]*winLoss[0]/(winLoss[0] + winLoss[1]) - aveWinLoss[1]*winLoss[1]/(winLoss[0] + winLoss[1]))
-  print expectancy
   return expectancy
 
 # FIX. THIS IS FUCKED UP.
@@ -66,7 +65,7 @@ def getMaxDrawdown(strategyResults):
   return min(maxDrawdowns)
 
 class StrategyMetrics:
-  def getStrategyMetrics(self, ticker, strategyResults):
+  def getStrategyMetrics(self, ticker, strategyResults, s_p_r_ma_pos):
     print '-> ' + __name__
     
     sharpe = getSharpe(strategyResults)
@@ -76,5 +75,5 @@ class StrategyMetrics:
     expectancy = getExpectancy(winLoss, aveWinLoss)
     maxDrawdown = getMaxDrawdown(strategyResults)
     
-    metrics = [sharpe, countPercentageIn, winLoss, aveWinLoss, expectancy, maxDrawdown]
+    metrics = [sharpe, countPercentageIn, winLoss, aveWinLoss, expectancy, maxDrawdown, strategyResults, s_p_r_ma_pos]
     return metrics

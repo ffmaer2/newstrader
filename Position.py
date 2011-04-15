@@ -29,4 +29,5 @@ class Position:
       #print s_p_r_ma_pos[date]
       i += 1
     
+    print s_p_r_ma_pos
     return s_p_r_ma_pos

@@ -38,7 +38,7 @@ def returns(p, i):
     return 0
   else:
     return (p[i] - p[i-1]) / p[i-1]
-  
+
 
 class Analytics:
   def getAnalytics(self, ticker, finaldata):
@@ -46,8 +46,8 @@ class Analytics:
     newdata = [(a, b) for a, b in finaldata.iteritems()]
     
     da = finaldata.keys()
-    s = []
     p = []
+    s = []
     r = []
     
     i = 0
@@ -61,4 +61,6 @@ class Analytics:
     added = day3MaAndReturns(s, p, da)
     #lagged = correlateLagged(s, p, da)
     return added
+    
+    
     

@@ -26,7 +26,7 @@ class Position:
       else:
 	pos.append(0)
       s_p_r_ma_pos[date] = s[i], p[i], r[i], ma[i], pos[i]
-      print s_p_r_ma_pos[date]
+      #print s_p_r_ma_pos[date]
       i += 1
     
     return s_p_r_ma_pos

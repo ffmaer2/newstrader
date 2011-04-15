@@ -26,5 +26,5 @@ class Strategy:
     
     # Fourth, determine the metrics.
     metricsObj = StrategyMetrics()
-    finalResults = metricsObj.getStrategyMetrics(ticker, strategyResults)
-    return finalResults
+    metrics = metricsObj.getStrategyMetrics(ticker, strategyResults, s_p_r_ma_pos)
+    return metrics
