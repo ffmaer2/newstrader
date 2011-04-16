@@ -11,8 +11,9 @@ def correlateLagged(s, p, da):
   # pearsonr(s[0:len(s)-dayLag], p[dayLag:len(s)])[0], can remove [0] to get p val
   for dayLag in range(int(len(s)*2/3)):
     d[da[i]] = pearsonr(s[0:len(s)-dayLag], p[dayLag:len(s)])[0]
-    #print da[i], s[i], d[da[i]]
+    print da[i], s[i], d[da[i]]
     i += 1
+  print d
   return d
 
 
@@ -59,7 +60,7 @@ class Analytics:
       i += 1
       
     added = day3MaAndReturns(s, p, da)
-    #lagged = correlateLagged(s, p, da)
+    lagged = correlateLagged(s, p, da)
     return added
     
     

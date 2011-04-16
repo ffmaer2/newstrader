@@ -17,7 +17,7 @@ class ReutersQuery:
     #end = raw_input('end: ')
 
     start = '2005-01-01'
-    end = '2005-1-30'
+    end = '2005-04-01'
 
     print timedelta(days=5)
 
@@ -36,7 +36,7 @@ class ReutersQuery:
 
       queryText = """select story_date_time, cast(take_text as text) from Reuters.dbo.news where related_rics like '%""" + ticker + """%' and language = 'en' and event_type = 'STORY_TAKE_OVERWRITE' and story_date_time >= '""" + startSegStr + """' and story_date_time <= '""" + endSegStr + """'"""
       
-      print '\nGETTING ARTICLES BETWEEN ' + startSegStr + ' AND ' + endSegStr + '\n'
+      print '\nFETCHING ARTICLES BETWEEN ' + startSegStr + ' AND ' + endSegStr + '\n'
       cursor.execute(queryText)
 
 

@@ -2,6 +2,7 @@
 # Remember: stem the words
 # THIS WILL RESULT IN DIFFERENT SENTIMENTS EVERYTIME - NOT MY FAULT. IT'S THE DATABASE'S :(
 import re
+import numpy
 
 def getPosWords():
   pos = open(r'pos.txt').read()
@@ -50,7 +51,13 @@ def getSentiment(reuterVector, lowNegWords, lowPosWords):
     count += 1
     print '#' + str(count)
     
-  return sentiment
+  normalized = []
+  sentstd = numpy.std(sentiment)
+  sentave = numpy.average(sentiment)
+  for sent in sentiment:
+    normalized.append((float(sent) - float(sentave))/(float(sentstd)))
+  
+  return normalized
 
 
 class Sentiment:  

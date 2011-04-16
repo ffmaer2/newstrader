@@ -29,7 +29,6 @@ def sent(finaldata):
   while i < len(newdata):
     s.append(newdata[i][1][0])
     i += 1
-  print s
   return s
 
 

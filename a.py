@@ -1,31 +1,37 @@
-import matplotlib.pyplot as plt
-import ystockquote
+from urllib import urlopen
+import nltk
+from nltk import PorterStemmer
+import re
 
-# Get Quotes 01/01/2006 - 01/01/2009
-GOOG = ystockquote.get_historical_prices('GOOG', '20060101', '20090101')
+url = "http://www.gutenberg.org/files/2554/2554.txt"
+raw = urlopen(url).read()
+tokens = nltk.word_tokenize(raw)
+print tokens
 
-# Create empty lists, quick and dirty
-GOOGOpen = [ ]
-GOOGClose = [ ]
-GOOGDate = [ ]
-GOOGHigh = [ ]
-GOOGLow = [ ]
-GOOGAdj = [ ]
-GOOGVolume = [ ]
+stemmedTokens = []
 
-# Populate lists from downloaded data
-for i in range(1, 755):
-	GOOGDate.append(GOOG[i][0])
-	GOOGOpen.append(GOOG[i][1])
-	GOOGHigh.append(GOOG[i][2])
-	GOOGLow.append(GOOG[i][3])
-	GOOGClose.append(GOOG[i][4])
-	GOOGVolume.append(GOOG[i][5])
- 	GOOGAdj.append(GOOG[i][6])
+stemmer = PorterStemmer()
+for word in tokens:
+  stemmedWord = stemmer.stem(word)
+  stemmedTokens.append(stemmedWord.lower())
+  
+  
 
-plt.plot(GOOGClose)
-plt.title("Google Adjusted Close")
-plt.ylabel(r"GOOG Closing Price ($USD)", fontsize = 12)
-plt.xlabel(r"Days", fontsize = 12)
-plt.grid(True)
-plt.show()
+stemmedNegTokens = []
+
+neg = open(r'neg.txt').read()
+neg = re.sub("\d", "", neg)
+negcount = 0
+negWords = nltk.word_tokenize(neg)
+for negWord in negWords:
+  stemmedNegWord = stemmer.stem(negWord)
+  stemmedNegTokens.append(stemmedNegWord.lower())
+
+print stemmedNegTokens
+
+
+for stemmed in stemmedNegTokens:
+  if stemmed in stemmedTokens:
+    negcount += 1
+
+print negcount

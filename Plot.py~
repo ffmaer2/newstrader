@@ -43,7 +43,7 @@ class Plot:
 
     
     fig = plt.figure()
-    fig.suptitle('Equity, Closing Price, Sentiment vs. Days', fontsize=12)
+    fig.suptitle('Equity, Closing Price, Sentiment vs. Days', fontsize=14)
 
     ax1 = fig.add_subplot(311)
     ax1.set_ylabel(r" Equity ($USD)", fontsize = 12)

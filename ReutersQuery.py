@@ -17,7 +17,7 @@ class ReutersQuery:
     #end = raw_input('end: ')
 
     start = '2005-01-01'
-    end = '2005-1-30'
+    end = '2005-01-03'
 
     print timedelta(days=5)
 
