@@ -3,7 +3,6 @@ from numpy import *
 
 def getSharpe(strategyResults):
   sharpe = average(strategyResults) * sqrt(260) / std(strategyResults)
-  #print 'Sharpe ratio: ' + str(round(sharpe, 2))
   return sharpe
   
 def getPercentageIn(strategyResults):
@@ -12,7 +11,6 @@ def getPercentageIn(strategyResults):
     if result != 0:
       countIn += 1
   percentageIn = float(countIn)/float(len(strategyResults)) 
-  #print 'Percentage in: ' + str(round(percentageIn, 2)) + '%'
   return countIn, percentageIn
 
 def getWinLoss(strategyResults):
@@ -51,7 +49,7 @@ def getExpectancy(winLoss, aveWinLoss):
   expectancy = (aveWinLoss[0]*winLoss[0]/(winLoss[0] + winLoss[1]) - aveWinLoss[1]*winLoss[1]/(winLoss[0] + winLoss[1]))
   return expectancy
 
-# FIX. THIS IS FUCKED UP.
+# FIX. THIS IS MESSED UP.
 def getMaxDrawdown(strategyResults):
   resultsCount = 0
   maxDrawdowns = []
@@ -64,6 +62,20 @@ def getMaxDrawdown(strategyResults):
       resultsCount = 0
   return min(maxDrawdowns)
 
+def companySharpe(s_p_r_ma_pos):
+  newdata = [(a, b) for a, b in s_p_r_ma_pos.iteritems()]
+  r = []
+  i = 0
+  while i < len(newdata):
+    r.append(newdata[i][2][1])
+    i += 1
+    
+  print average(r)
+  print std(r)
+  cSharpe = average(r) * sqrt(260) / std(r)
+  return cSharpe
+    
+
 class StrategyMetrics:
   def getStrategyMetrics(self, ticker, strategyResults, s_p_r_ma_pos):
     print '-> ' + __name__
@@ -74,6 +86,7 @@ class StrategyMetrics:
     aveWinLoss = getAveWinLoss(strategyResults) # tuple
     expectancy = getExpectancy(winLoss, aveWinLoss)
     maxDrawdown = getMaxDrawdown(strategyResults)
+    cSharpe = companySharpe(s_p_r_ma_pos)
     
-    metrics = [sharpe, countPercentageIn, winLoss, aveWinLoss, expectancy, maxDrawdown, strategyResults]
+    metrics = [sharpe, countPercentageIn, winLoss, aveWinLoss, expectancy, maxDrawdown, strategyResults, s_p_r_ma_pos, cSharpe]
     return metrics

@@ -8,12 +8,11 @@ def correlateLagged(s, p, da):
   d = {}
   i = 0
 
-  # pearsonr(s[0:len(s)-dayLag], p[dayLag:len(s)])[0], can remove [0] to get p val
+  # Actually very useful - there should be an option to take the highest, most significant correlation.
   for dayLag in range(int(len(s)*2/3)):
-    d[da[i]] = pearsonr(s[0:len(s)-dayLag], p[dayLag:len(s)])[0]
+    d[da[i]] = pearsonr(s[0:len(s)-dayLag], p[dayLag:len(s)])
     print da[i], s[i], d[da[i]]
     i += 1
-  print d
   return d
 
 
@@ -24,11 +23,10 @@ def day3MaAndReturns(s, p, da):
   for date in da:
     if i == 0:
       wma[date] = s[i], p[i], 0, 0
-    elif i == 1:
+    elif i == 1 or i == 2:
       wma[date] = s[i], p[i], returns(p, i), 0
-    else:
       # Weighted average attached at the end, there.
-      wma[date] = s[i], p[i], returns(p, i), (s[i]*1 + s[i-1]*0.75 + s[i-2]*0.25)/2
+      wma[date] = s[i], p[i], returns(p, i), s[i-3] #(s[i]*1 + s[i-1]*0.75 + s[i-2]*0.25)/2
     #print date, wma[date]
     i += 1
   return wma

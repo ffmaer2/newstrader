@@ -9,7 +9,6 @@ class ReutersQuery:
     print 'Querying..'
     conn = pymssql.connect(host='vpanos.stern.nyu.edu:1433', user='devel', password='developer', database='Reuters')
     cursor = conn.cursor()
-
     results = []
 
     print 'Enter start and end date, both in the format of YYYY-MM-DD'
@@ -17,7 +16,7 @@ class ReutersQuery:
     #end = raw_input('end: ')
 
     start = '2005-01-01'
-    end = '2005-01-03'
+    end = '2005-06-01'
 
     print timedelta(days=5)
 
@@ -36,16 +35,14 @@ class ReutersQuery:
 
       queryText = """select story_date_time, cast(take_text as text) from Reuters.dbo.news where related_rics like '%""" + ticker + """%' and language = 'en' and event_type = 'STORY_TAKE_OVERWRITE' and story_date_time >= '""" + startSegStr + """' and story_date_time <= '""" + endSegStr + """'"""
       
-      print '\nFETCHING ARTICLES BETWEEN ' + startSegStr + ' AND ' + endSegStr + '\n'
+      print '\nFETCHING ARTICLES BETWEEN ' + startSegStr + ' AND ' + endSegStr
       cursor.execute(queryText)
-
-
+      
       row = cursor.fetchone()
       while row:
         toAdd = (row[0], row[1])
         results.append(toAdd)
         row = cursor.fetchone()
-
 
     conn.close()
 

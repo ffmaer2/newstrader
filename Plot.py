@@ -33,8 +33,7 @@ def sent(finaldata):
 
 
 class Plot:    
-  def plotThisFucker(self, ticker, finaldata, performance):    
-    print 'Hi'
+  def plotThis(self, ticker, finaldata, performance):
     # We need the closing prices.
     p = getP(finaldata)
     e = equity(performance)

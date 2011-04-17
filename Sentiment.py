@@ -1,30 +1,37 @@
 # Calculate sentiment based on positive, negative, and uncertain word counts
-# Remember: stem the words
 # THIS WILL RESULT IN DIFFERENT SENTIMENTS EVERYTIME - NOT MY FAULT. IT'S THE DATABASE'S :(
 import re
 import numpy
+import nltk
+from nltk import PorterStemmer
+
 
 def getPosWords():
+  stemmer = PorterStemmer()
+  stemmedPosTokens = []
   pos = open(r'pos.txt').read()
-  pattern = re.compile('\s\d*\s')
-  posWords = re.split(pattern, pos)
-  lowPosWords = []
+  pos = re.sub("\d", "", pos)
+  posWords = nltk.word_tokenize(pos)
   for posWord in posWords:
-    posWord = posWord.lower()
-    lowPosWords.append(posWord)
-  return lowPosWords
+    stemmedPosWord = stemmer.stem(posWord)
+    stemmedPosTokens.append(stemmedPosWord.lower())
+  return stemmedPosTokens
 
-def getNegWords():
+
+def getNegWords():  
+  stemmer = PorterStemmer()
+  stemmedNegTokens = []
+
   neg = open(r'neg.txt').read()
-  pattern = re.compile('\s\d*\s')
-  negWords = re.split(pattern, neg)
-  lowNegWords = []
+  neg = re.sub("\d", "", neg)
+  negWords = nltk.word_tokenize(neg)
   for negWord in negWords:
-    negWord = negWord.lower()
-    lowNegWords.append(negWord)
-  return lowNegWords
+    stemmedNegWord = stemmer.stem(negWord)
+    stemmedNegTokens.append(stemmedNegWord.lower())
+  return stemmedNegTokens
 
-def getSentiment(reuterVector, lowNegWords, lowPosWords):
+
+def getSentiment(reuterVector, stemmedNegTokens, stemmedPosTokens):
   count = 0
   sentiment = []
 
@@ -34,21 +41,29 @@ def getSentiment(reuterVector, lowNegWords, lowPosWords):
     poscount = 1
 
     # word count
-    wordsinarticle = article[1].split()
-    wordcount = len(wordsinarticle)
+    wordsInArticle = nltk.word_tokenize(article[1]) # list
+    wordcount = len(wordsInArticle)
 
-    # count frequencies
-    for negword in lowNegWords:
-      if re.search(re.compile(negword), article[1]) != None:
+    stemmedTokens = []
+    stemmer = PorterStemmer()
+
+    for word in wordsInArticle:
+      stemmedWord = stemmer.stem(word)
+      stemmedTokens.append(stemmedWord.lower())
+    
+    for negStemmed in stemmedNegTokens:
+      if negStemmed in stemmedTokens:
 	negcount += 1
-    for posword in lowPosWords:
-      if re.search(re.compile(posword), article[1]) != None:
-	poscount += 1    
-
+    for posStemmed in stemmedPosTokens:
+      if posStemmed in stemmedTokens:
+	poscount += 1
+	
+    print poscount, negcount
     # sentiment - 0% is neutral
-    sentraw = (float(poscount) - float(negcount)) / (poscount)
+    sentraw = (float(poscount) - float(negcount)) / float(wordcount + 1)
     sentiment.append(sentraw)
     count += 1
+    
     print '#' + str(count)
     
   normalized = []
@@ -62,7 +77,6 @@ def getSentiment(reuterVector, lowNegWords, lowPosWords):
 
 class Sentiment:  
   def sentimentVectorize(self, reuterVector):
-    print 'Vectorizing sentiment..'
     print 'Generating sentiment for article:'
     posl = getPosWords()
     negl = getNegWords()

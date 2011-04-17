@@ -29,13 +29,11 @@ def sent(finaldata):
   while i < len(newdata):
     s.append(newdata[i][1][0])
     i += 1
-  print s
   return s
 
 
 class Plot:    
-  def plotThisFucker(self, ticker, finaldata, performance):    
-    print 'Hi'
+  def plotThis(self, ticker, finaldata, performance):
     # We need the closing prices.
     p = getP(finaldata)
     e = equity(performance)

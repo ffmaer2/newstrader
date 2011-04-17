@@ -67,5 +67,5 @@ class Merge:
     datesSentimentsR = mergeDatesAndAverageSentiment(sentiments, dates)
     pricesR = getPricesReady(yahooVector) # We're all good here
     merged = mergeDatesSentimentsAndPrices(datesSentimentsR, pricesR)
-    print len(merged)
+    #print len(merged)
     return sort(merged)

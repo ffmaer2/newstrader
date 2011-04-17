@@ -5,6 +5,9 @@
 # BIG ISSUE: Yahoo won't let you query more than ~140 dates
 # Workaround: break into separate queries, and append.
 
+# ^ Edit ^ nevermind. They're cool with whatever. It's the querying of the database that
+# seems to cause issues.
+
 from datetime import datetime
 from datetime import timedelta
 from datetime import date

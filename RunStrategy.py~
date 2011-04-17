@@ -32,6 +32,5 @@ class RunStrategy:
       pos.append(float(newdata[i][1][4]))
       i += 1
     
-    
     return getPerformance(r, pos)
     

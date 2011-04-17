@@ -52,8 +52,7 @@ def main():
 
   outputObj = Output()
   outputObj.putOutput(ticker, metrics, yahooVector, finaldata)
-
-
+  print 'Thanks for trading with Vivek! Get money get paid!'
 
 
 if __name__ == "__main__":
