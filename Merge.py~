@@ -32,11 +32,6 @@ def mergeDatesAndAverageSentiment(sentiments, dates):
     #print date, d[date], sentiments[index]
     index += 1
   
-  #Index and totalcount should be the same!
-  #print index
-  #print totalcount
-  
-  # Fixed
   return dict( (n, d.get(n, 0) / e.get(n, 0)) for n in set(d)|set(e) )
 
 

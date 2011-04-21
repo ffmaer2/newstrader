@@ -31,18 +31,35 @@ def getNegWords():
   return stemmedNegTokens
 
 
-def getSentiment(reuterVector, stemmedNegTokens, stemmedPosTokens):
+def getUncertainWords():  
+  stemmer = PorterStemmer()
+  stemmedUnTokens = []
+
+  un = open(r'uncertain.txt').read()
+  un = re.sub("\d", "", un)
+  unWords = nltk.word_tokenize(un)
+  for unWord in unWords:
+    stemmedUnWord = stemmer.stem(unWord)
+    stemmedUnTokens.append(stemmedUnWord.lower())
+  return stemmedUnTokens
+
+
+def getSentiment(reuterVector, stemmedNegTokens, stemmedPosTokens, stemmedUnTokens):
   count = 0
   sentiment = []
+  normalized = []
 
   for article in reuterVector:	
-    sentsum = 0
-    negcount = 1
-    poscount = 1
+    sentSum = 0
+    negCount = 1
+    posCount = 1
+    unCount = 1
+    sentStd = 1
+    sentAve = 0
 
     # word count
     wordsInArticle = nltk.word_tokenize(article[1]) # list
-    wordcount = len(wordsInArticle)
+    wordCount = len(wordsInArticle)
 
     stemmedTokens = []
     stemmer = PorterStemmer()
@@ -53,24 +70,41 @@ def getSentiment(reuterVector, stemmedNegTokens, stemmedPosTokens):
     
     for negStemmed in stemmedNegTokens:
       if negStemmed in stemmedTokens:
-	negcount += 1
+	negCount += 1
     for posStemmed in stemmedPosTokens:
       if posStemmed in stemmedTokens:
-	poscount += 1
+	posCount += 1
+    for unStemmed in stemmedUnTokens:
+      if unStemmed in stemmedTokens:
+	unCount += 1	
 	
-    print poscount, negcount
+	
     # sentiment - 0% is neutral
-    sentraw = (float(poscount) - float(negcount)) / float(wordcount + 1)
-    sentiment.append(sentraw)
+    #sentraw = (float(poscount) - float(negcount)) / float(wordcount + 1)
+    if count < 5:
+      sentRaw = (float(posCount)-float(negCount))*(float(unCount)/float(wordCount+1))/float(posCount)
+      sentiment.append(sentRaw)
+    else:
+      sentRaw = (posCount - negCount) * unCount / ((wordCount+1) * (numpy.average(sentiment[count-len(sentiment):count]))) # average is dampening factor
+      sentiment.append(sentRaw)
+      
     count += 1
     
-    print '#' + str(count)
+    # Progress
+    print str(round(float(count) * 100 / float(len(reuterVector)), 2)) + "%"
     
-  normalized = []
-  sentstd = numpy.std(sentiment)
-  sentave = numpy.average(sentiment)
-  for sent in sentiment:
-    normalized.append((float(sent) - float(sentave))/(float(sentstd)))
+    if count < 10:
+      sentStd = 1.0
+      sentAve = 0.0
+    else:
+      sentStd = numpy.std(sentiment[count-10:count])
+      sentAve = numpy.average(sentiment[count-10:count])
+    
+    if sentStd != 0:
+      normalized.append((float(sentRaw) - float(sentAve))/(float(sentStd)))
+    else:
+      normalized.append((float(sentRaw) - float(sentAve))/(1.0))
+
   
   return normalized
 
@@ -78,7 +112,8 @@ def getSentiment(reuterVector, stemmedNegTokens, stemmedPosTokens):
 class Sentiment:  
   def sentimentVectorize(self, reuterVector):
     print 'Generating sentiment for article:'
-    posl = getPosWords()
-    negl = getNegWords()
-    sentiment = getSentiment(reuterVector, negl, posl)
+    posT = getPosWords()
+    negT = getNegWords()
+    unT = getUncertainWords()
+    sentiment = getSentiment(reuterVector, negT, posT, unT)
     return sentiment

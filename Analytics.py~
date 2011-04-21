@@ -7,27 +7,32 @@ from OrderedDict import OrderedDict
 def correlateLagged(s, p, da):
   d = {}
   i = 0
+  print '\tDay lags\tCorrelation\tTwo-tailed p-value'
 
   # Actually very useful - there should be an option to take the highest, most significant correlation.
-  for dayLag in range(int(len(s)*2/3)):
+  for dayLag in range(int(len(s)/4)):
     d[da[i]] = pearsonr(s[0:len(s)-dayLag], p[dayLag:len(s)])
-    print da[i], s[i], d[da[i]]
+    print '\t' + str(i) + '\t\t' + str(round(d[da[i]][0], 6)) + '\t\t' + str(round(d[da[i]][1], 6))
     i += 1
-  return d
 
 
-def day3MaAndReturns(s, p, da):
+# Counter-trend
+# Moving average
+
+def strat(s, p, da):
   wma = OrderedDict()
   i = 0
+  #lag = int(raw_input('Enter the amount of lag you want in days, son: '))
+  filler = 0
   
   for date in da:
     if i == 0:
       wma[date] = s[i], p[i], 0, 0
-    elif i == 1 or i == 2 or i == 3 or i == 4 or i == 5 or i == 6 or i == 7 or i == 8 or i == 9 or i == 10 or i == 11:
+    elif i == 1:
       wma[date] = s[i], p[i], returns(p, i), 0
       # Weighted average attached at the end, there.
-      wma[date] = s[i], p[i], returns(p, i), s[i-12] #(s[i]*1 + s[i-1]*0.75 + s[i-2]*0.25)/2
-    #print date, wma[date]
+    else:
+      wma[date] = s[i], p[i], returns(p, i), (s[i]*1 + s[i-1]*0.50 + s[i-2]*0.25 + s[i-3]*.125)/1.825
     i += 1
   return wma
     
@@ -40,11 +45,11 @@ def returns(p, i):
 
 
 class Analytics:
-  def getAnalytics(self, ticker, finaldata):
+  def getAnalytics(self, ticker, merged):
     print '-> ' + __name__
-    newdata = [(a, b) for a, b in finaldata.iteritems()]
+    newdata = [(a, b) for a, b in merged.iteritems()]
     
-    da = finaldata.keys()
+    da = merged.keys()
     p = []
     s = []
     r = []
@@ -57,8 +62,8 @@ class Analytics:
       r.append(0)
       i += 1
       
-    added = day3MaAndReturns(s, p, da)
-    lagged = correlateLagged(s, p, da)
+    correlateLagged(s, p, da)
+    added = strat(s, p, da)
     return added
     
     

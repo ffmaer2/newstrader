@@ -6,7 +6,7 @@ from time import mktime
 
 class ReutersQuery:  
   def getQuery(self, ticker):
-    print 'Querying..'
+    print 'Querying..\n'
     conn = pymssql.connect(host='vpanos.stern.nyu.edu:1433', user='devel', password='developer', database='Reuters')
     cursor = conn.cursor()
     results = []
@@ -15,10 +15,8 @@ class ReutersQuery:
     #start = raw_input('start: ')
     #end = raw_input('end: ')
 
-    start = '2005-01-01'
-    end = '2005-06-01'
-
-    print timedelta(days=5)
+    start = '2003-01-01'
+    end = '2003-03-01'
 
     startStrip = time.strptime(start[:10], "%Y-%m-%d")
     endStrip = time.strptime(end[:10], "%Y-%m-%d")
@@ -35,7 +33,8 @@ class ReutersQuery:
 
       queryText = """select story_date_time, cast(take_text as text) from Reuters.dbo.news where related_rics like '%""" + ticker + """%' and language = 'en' and event_type = 'STORY_TAKE_OVERWRITE' and story_date_time >= '""" + startSegStr + """' and story_date_time <= '""" + endSegStr + """'"""
       
-      print '\nFETCHING ARTICLES BETWEEN ' + startSegStr + ' AND ' + endSegStr
+      print 'FETCHING ARTICLES BETWEEN ' + startSegStr + ' AND ' + endSegStr
+
       cursor.execute(queryText)
       
       row = cursor.fetchone()

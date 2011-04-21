@@ -30,29 +30,36 @@ from Merge import Merge
 from Strategy import Strategy
 from Output import Output
 
-def main():
-  ticker = raw_input("Welcome. Ready to trade? Pick a stock ticker: ")
-  reuterObj = ReutersQuery()
-  reuterVector = reuterObj.getQuery(ticker)
+ticker = ''
 
-  sentimentObj = Sentiment()
-  sentiments = sentimentObj.sentimentVectorize(reuterVector)
+def keepGoing():
+  ticker = raw_input("Enter a stock ticker (Building a portfolio of 3 stocks): ")
+  return True
 
-  yahooObj = YahooQuery()
-  yahooVector = yahooObj.doYahooQuery(ticker, reuterVector)
 
-  reuterDates = DateFormat()
-  dates = reuterDates.fixDates(reuterVector)
+def main():  
+  if (keepGoing() is True):
+    reuterObj = ReutersQuery()
+    reuterVector = reuterObj.getQuery(ticker)
 
-  mergeObj = Merge()
-  finaldata = mergeObj.mergeEverything(sentiments, yahooVector, dates)
+    sentimentObj = Sentiment()
+    sentiments = sentimentObj.sentimentVectorize(reuterVector)
 
-  strategyObj = Strategy()
-  metrics = strategyObj.runStrategy(ticker, finaldata)
+    yahooObj = YahooQuery()
+    yahooVector = yahooObj.doYahooQuery(ticker, reuterVector)
 
-  outputObj = Output()
-  outputObj.putOutput(ticker, metrics, yahooVector, finaldata)
-  print 'Thanks for trading with Vivek! Get money get paid!'
+    reuterDates = DateFormat()
+    dates = reuterDates.fixDates(reuterVector)
+
+    mergeObj = Merge()
+    merged = mergeObj.mergeEverything(sentiments, yahooVector, dates)
+
+    strategyObj = Strategy()
+    metrics = strategyObj.runStrategy(ticker, merged)
+
+    outputObj = Output()
+    outputObj.putOutput(ticker, metrics, yahooVector, merged)
+  print 'Thanks for trading with Vivek! Get money, get paid!'
 
 
 if __name__ == "__main__":

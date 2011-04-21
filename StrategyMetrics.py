@@ -3,6 +3,9 @@ from numpy import *
 
 def getSharpe(strategyResults):
   sharpe = average(strategyResults) * sqrt(260) / std(strategyResults)
+  print strategyResults
+  print average(strategyResults)
+  print std(strategyResults)
   return sharpe
   
 def getPercentageIn(strategyResults):
@@ -24,10 +27,12 @@ def getWinLoss(strategyResults):
   return win, loss
 
 def getAveWinLoss(strategyResults):
-  win = 0
+  win = 1
   winResults = 0
-  loss = 0
+  
+  loss = 1
   lossResults = 0
+  
   for result in strategyResults:
     if result > 0:
       win += 1
@@ -43,10 +48,15 @@ def getAveWinLoss(strategyResults):
   # In the weird chance you didn't lose any.
   if loss != 0:
     aveLoss = float(lossResults)/float(loss)
+    
   return aveWin, aveLoss
 
 def getExpectancy(winLoss, aveWinLoss):
-  expectancy = (aveWinLoss[0]*winLoss[0]/(winLoss[0] + winLoss[1]) - aveWinLoss[1]*winLoss[1]/(winLoss[0] + winLoss[1]))
+  if winLoss[0] == 0 and winLoss[1] == 0:
+    return 0.0
+  else:
+    expectancy = aveWinLoss[0]*winLoss[0]/(winLoss[0] + winLoss[1]) - aveWinLoss[1]*winLoss[1]/(winLoss[0] + winLoss[1])
+  #expectancy = 9000
   return expectancy
 
 # FIX. THIS IS MESSED UP.
@@ -69,9 +79,6 @@ def companySharpe(s_p_r_ma_pos):
   while i < len(newdata):
     r.append(newdata[i][1][2])
     i += 1
-    
-  print average(r)
-  print std(r)
   cSharpe = average(r) * sqrt(260) / std(r)
   return cSharpe
     

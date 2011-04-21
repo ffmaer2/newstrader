@@ -201,7 +201,7 @@ def onlyDateAndClose(historicalPrices):
   fixedDateAndClose = []
   index = 1
   while index < len(historicalPrices):
-    toAdd = historicalPrices[index][0], historicalPrices[index][4]
+    toAdd = historicalPrices[index][0], historicalPrices[index][1]
     fixedDateAndClose.append(toAdd)
     index += 1
   return fixedDateAndClose
@@ -214,6 +214,5 @@ class YahooQuery:
     startDate = getFirstDate(reuterVector)
     endDate = getLastDate(reuterVector)
     historicalPrices = get_historical_prices(ticker, startDate, endDate)
-
     print 'Price query done.'
     return onlyDateAndClose(historicalPrices)

@@ -45,13 +45,13 @@ def main():
   dates = reuterDates.fixDates(reuterVector)
 
   mergeObj = Merge()
-  finaldata = mergeObj.mergeEverything(sentiments, yahooVector, dates)
+  merged = mergeObj.mergeEverything(sentiments, yahooVector, dates)
 
   strategyObj = Strategy()
-  metrics = strategyObj.runStrategy(ticker, finaldata)
+  metrics = strategyObj.runStrategy(ticker, merged)
 
   outputObj = Output()
-  outputObj.putOutput(ticker, metrics, yahooVector, finaldata)
+  outputObj.putOutput(ticker, metrics, yahooVector, merged)
   print 'Thanks for trading with Vivek! Get money, get paid!'
 
 

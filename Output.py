@@ -4,7 +4,7 @@ from Plot import Plot
 #http://www.mindtwist.de/main/linux/3-linux-tipps/48-how-to-pretty-print-lists-in-python.html
 
 class Output:
-  def putOutput(self, ticker, metrics, yahooVector, finaldata):
+  def putOutput(self, ticker, metrics, yahooVector, merged):
     print '\n---------- AND THE RESULTS ----------'
     print 'Sharpe ratio\t\t ==> ' + str(round(metrics[0], 2))
     print 'Company Sharpe ratio\t ==> ' + str(round(metrics[8], 2))
@@ -18,5 +18,5 @@ class Output:
     
     print 'Plotting results..'
     we = Plot()
-    # We want to plot stock performance, equity, and sentiment.
-    we.plotThis(ticker, finaldata, metrics[6])
+    # We want to plot equity, stock performance, and sentiment.
+    we.plotThis(ticker, merged, metrics[6], metrics[7])

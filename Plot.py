@@ -1,8 +1,8 @@
 # PLOT THE RESULTS! WHOO.
 import matplotlib.pyplot as plt
 
-def getP(finaldata):
-  newdata = [(a, b) for a, b in finaldata.iteritems()]
+def getP(merged):
+  newdata = [(a, b) for a, b in merged.iteritems()]
   p = []
   i = 0
   while i < len(newdata):
@@ -15,6 +15,7 @@ def equity(performance):
   start = 100
   e = []
   i = 0
+  print performance
   for a in performance:
     e.append(start)
     start += performance[i]*start
@@ -22,22 +23,23 @@ def equity(performance):
   return e
 
 
-def sent(finaldata):
-  newdata = [(a, b) for a, b in finaldata.iteritems()]
-  s = []
+def sent(s_p_r_ma_pos):
+  newdata = [(a, b) for a, b in s_p_r_ma_pos.iteritems()]
+  ma = []
   i = 0
   while i < len(newdata):
-    s.append(newdata[i][1][0])
+    ma.append(newdata[i][1][3])
     i += 1
-  return s
+  return ma
 
 
 class Plot:    
-  def plotThis(self, ticker, finaldata, performance):
+  def plotThis(self, ticker, merged, performance, s_p_r_ma_pos):
     # We need the closing prices.
-    p = getP(finaldata)
+    p = getP(merged)
     e = equity(performance)
-    s = sent(finaldata)
+    print sum(performance)/float(len(performance))
+    ma = sent(s_p_r_ma_pos)
 
     
     fig = plt.figure()
@@ -56,7 +58,7 @@ class Plot:
     ax3 = fig.add_subplot(313)
     ax3.set_ylabel(r"Sentiment", fontsize = 12)
     ax3.set_xlabel(r"Days", fontsize = 12)
-    ax3.plot(s, 'b')
+    ax3.plot(ma, 'b')
     ax3.grid(True)   
     
     plt.show()
