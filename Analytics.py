@@ -34,7 +34,9 @@ def strat(s, p, da):
       # MA of 4 days, decreasing in weight.
       # Using the one day sentiment works better for WMT 2003-01-01 to 2003-06-01
       # Cause a trade in whatever direction sentiment is
-      wma[date] = s[i], p[i], returns(p, i), s[i]*100000000
+      wma[date] = s[i], p[i], returns(p, i), s[i]
+      #wma[date] = s[i], p[i], returns(p, i), (s[i]*1 + s[i-1]*0.5 + s[i-2]*0.25 + s[i]*0.125)/1.875
+      #wma[date] = s[i], p[i], returns(p, i), s[i]*100000000
     i += 1
   return wma
     

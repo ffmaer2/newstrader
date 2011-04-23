@@ -16,7 +16,7 @@ class ReutersQuery:
     #end = raw_input('end: ')
 
     start = '2003-01-01'
-    end = '2004-01-01'
+    end = '2003-06-01'
 
     startStrip = time.strptime(start[:10], "%Y-%m-%d")
     endStrip = time.strptime(end[:10], "%Y-%m-%d")
