@@ -9,20 +9,19 @@ def correlateLagged(s, p, da):
   i = 0
   print '\tDay lags\tCorrelation\tTwo-tailed p-value'
 
-  # Actually very useful - there should be an option to take the highest, most significant correlation.
+  # Actually very interesting results.
   for dayLag in range(int(len(s)/4)):
     d[da[i]] = pearsonr(s[0:len(s)-dayLag], p[dayLag:len(s)])
     print '\t' + str(i) + '\t\t' + str(round(d[da[i]][0], 6)) + '\t\t' + str(round(d[da[i]][1], 6))
     i += 1
 
 
-# Counter-trend
-# Moving average
+# Counter-trend?
+# Moving average?
 
 def strat(s, p, da):
   wma = OrderedDict()
   i = 0
-  #lag = int(raw_input('Enter the amount of lag you want in days, son: '))
   filler = 0
   
   for date in da:
@@ -32,7 +31,10 @@ def strat(s, p, da):
       wma[date] = s[i], p[i], returns(p, i), 0
       # Weighted average attached at the end, there.
     else:
-      wma[date] = s[i], p[i], returns(p, i), (s[i]*1 + s[i-1]*0.50 + s[i-2]*0.25 + s[i-3]*.125)/1.875
+      # MA of 4 days, decreasing in weight.
+      # Using the one day sentiment works better for WMT 2003-01-01 to 2003-06-01
+      # Cause a trade in whatever direction sentiment is
+      wma[date] = s[i], p[i], returns(p, i), s[i]*100000000
     i += 1
   return wma
     

@@ -3,9 +3,6 @@ from numpy import *
 
 def getSharpe(strategyResults):
   sharpe = average(strategyResults) * sqrt(260) / std(strategyResults)
-  print strategyResults
-  print average(strategyResults)
-  print std(strategyResults)
   return sharpe
   
 def getPercentageIn(strategyResults):
@@ -56,10 +53,9 @@ def getExpectancy(winLoss, aveWinLoss):
     return 0.0
   else:
     expectancy = aveWinLoss[0]*winLoss[0]/(winLoss[0] + winLoss[1]) - aveWinLoss[1]*winLoss[1]/(winLoss[0] + winLoss[1])
-  #expectancy = 9000
   return expectancy
 
-# FIX. THIS IS MESSED UP.
+
 def getMaxDrawdown(strategyResults):
   resultsCount = 0
   maxDrawdowns = []
@@ -71,6 +67,7 @@ def getMaxDrawdown(strategyResults):
       maxDrawdowns.append(resultsCount)
       resultsCount = 0
   return min(maxDrawdowns)
+
 
 def companySharpe(s_p_r_ma_pos):
   newdata = [(a, b) for a, b in s_p_r_ma_pos.iteritems()]

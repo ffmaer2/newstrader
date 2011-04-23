@@ -5,13 +5,13 @@ from RunStrategy import RunStrategy
 from StrategyMetrics import StrategyMetrics
 
 class Strategy:
-  def runStrategy(self, ticker, finaldata):
+  def runStrategy(self, ticker, merged):
     print 'Running strategy on ' + ticker + '..'  
     
     # First, do analytics to figure out how to execute the strategy.
     # Return lagged correlations and (10dayMA) of those lagged correlations.
     analyticsObj = Analytics()
-    s_p_r_ma = analyticsObj.getAnalytics(ticker, finaldata)
+    s_p_r_ma = analyticsObj.getAnalytics(ticker, merged)
     
     # Second, determine the position.
     # Take 10dayMA and take a position.

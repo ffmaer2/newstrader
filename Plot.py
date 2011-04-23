@@ -1,4 +1,4 @@
-# PLOT THE RESULTS! WHOO.
+# PLOT THE RESULTS!
 import matplotlib.pyplot as plt
 
 def getP(merged):
@@ -15,7 +15,6 @@ def equity(performance):
   start = 100
   e = []
   i = 0
-  print performance
   for a in performance:
     e.append(start)
     start += performance[i]*start
@@ -35,10 +34,8 @@ def sent(s_p_r_ma_pos):
 
 class Plot:    
   def plotThis(self, ticker, merged, performance, s_p_r_ma_pos):
-    # We need the closing prices.
     p = getP(merged)
     e = equity(performance)
-    print sum(performance)/float(len(performance))
     ma = sent(s_p_r_ma_pos)
 
     

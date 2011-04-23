@@ -85,7 +85,7 @@ def getSentiment(reuterVector, stemmedNegTokens, stemmedPosTokens, stemmedUnToke
       sentRaw = (float(posCount)-float(negCount))*(float(unCount)/float(wordCount+1))/float(posCount)
       sentiment.append(sentRaw)
     else:
-      sentRaw = (posCount - negCount) * unCount / ((wordCount+1) * (numpy.average(sentiment[count-len(sentiment):count]))) # average is dampening factor
+      sentRaw = (posCount - negCount) / ((wordCount+1) * unCount)
       sentiment.append(sentRaw)
       
     count += 1
@@ -104,8 +104,6 @@ def getSentiment(reuterVector, stemmedNegTokens, stemmedPosTokens, stemmedUnToke
       normalized.append((float(sentRaw) - float(sentAve))/(float(sentStd)))
     else:
       normalized.append((float(sentRaw) - float(sentAve))/(1.0))
-
-  
   return normalized
 
 

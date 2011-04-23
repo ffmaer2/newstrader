@@ -10,9 +10,7 @@ def getPerformance(r, pos):
       perf.append(toAdd)
     else:
       perf.append(r[i]*pos[i-1])
-    i += 1
-    
-  
+    i += 1  
   return perf
 
 

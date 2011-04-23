@@ -14,8 +14,6 @@ class Strategy:
     s_p_r_ma = analyticsObj.getAnalytics(ticker, merged)
     
     # Second, determine the position.
-    # Take 10dayMA and take a position.
-    # Short thresh = ; long thresh = 
     positionObj = Position()
     s_p_r_ma_pos = positionObj.getPosition(ticker, s_p_r_ma)
     
