@@ -15,14 +15,13 @@ class ReutersQuery:
     #start = raw_input('start: ')
     #end = raw_input('end: ')
 
-    start = '2003-01-01'
-    end = '2003-06-01'
+    start = '2007-01-01'
+    end = '2008-01-01'
 
     startStrip = time.strptime(start[:10], "%Y-%m-%d")
     endStrip = time.strptime(end[:10], "%Y-%m-%d")
     startObj = datetime.fromtimestamp(mktime(startStrip))
     endObj = datetime.fromtimestamp(mktime(endStrip))
-    print endObj - startObj
 
     startSeg = startObj
 
