@@ -11,6 +11,7 @@
 from datetime import datetime
 from datetime import timedelta
 from datetime import date
+import time
 
 
 ########## START YAHOO QUERY CODE ############
@@ -209,7 +210,8 @@ def onlyDateAndClose(historicalPrices):
 
 class YahooQuery:
   def doYahooQuery(self, ticker, reuterVector):
-    print 'Querying historical prices from Yahoo Finance..'
+    print 'Querying historical prices from Yahoo Finance..\n'
+    time.sleep(1)
     
     startDate = getFirstDate(reuterVector)
     endDate = getLastDate(reuterVector)

@@ -12,11 +12,8 @@ class ReutersQuery:
     results = []
 
     print 'Enter start and end date, both in the format of YYYY-MM-DD'
-    #start = raw_input('start: ')
-    #end = raw_input('end: ')
-
-    start = '2007-01-01'
-    end = '2008-01-01'
+    start = raw_input('start: ')
+    end = raw_input('end: ')
 
     startStrip = time.strptime(start[:10], "%Y-%m-%d")
     endStrip = time.strptime(end[:10], "%Y-%m-%d")

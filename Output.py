@@ -5,7 +5,7 @@ from Plot import Plot
 
 class Output:
   def putOutput(self, ticker, metrics, yahooVector, merged):
-    print '\n---------- AND THE RESULTS ----------'
+    print '\n---------- '+ticker+' THE RESULTS ----------'
     print 'Sharpe ratio\t\t ==> ' + str(round(metrics[0], 2))
     print 'Company Sharpe ratio\t ==> ' + str(round(metrics[8], 2))
     print 'Number of trades\t ==> ' + str(metrics[1][0])

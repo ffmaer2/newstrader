@@ -2,10 +2,8 @@
 from numpy import *
 
 def getSharpe(strategyResults):
-  sharpe = average(strategyResults) * sqrt(260) / std(strategyResults)
-  print strategyResults
-  print average(strategyResults)
-  print std(strategyResults)
+  # Need to change sqrt() depending on the time period
+  sharpe = average(strategyResults) * sqrt(len(strategyResults)) / std(strategyResults)
   return sharpe
   
 def getPercentageIn(strategyResults):
@@ -79,7 +77,7 @@ def companySharpe(s_p_r_ma_pos):
   while i < len(newdata):
     r.append(newdata[i][1][2])
     i += 1
-  cSharpe = average(r) * sqrt(260) / std(r)
+  cSharpe = average(r) * sqrt(len(s_p_r_ma_pos) / std(r)
   return cSharpe
     
 

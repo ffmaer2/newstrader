@@ -4,6 +4,7 @@
 
 from collections import *
 from OrderedDict import OrderedDict
+import time
 
 # We're getting the sentiments matched up with the dates of the articles they correspond to.
 def mergeDatesAndAverageSentiment(sentiments, dates):
@@ -58,6 +59,8 @@ def sort(merged):
 class Merge:
   def mergeEverything(self, sentiments, yahooVector, dates):
     print 'Merging sentiment and price vectors..'
+    time.sleep(1)
+
     datesSentimentsR = mergeDatesAndAverageSentiment(sentiments, dates)
     pricesR = getPricesReady(yahooVector) # We're all good here
     merged = mergeDatesSentimentsAndPrices(datesSentimentsR, pricesR)

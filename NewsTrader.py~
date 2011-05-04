@@ -29,11 +29,17 @@ from DateFormat import DateFormat
 from Merge import Merge
 from Strategy import Strategy
 from Output import Output
+import warnings
+
+def fxn():
+    warnings.warn("deprecated", DeprecationWarning)
+
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    fxn()
 
 def main():
-  #index = 0
-  #while index < 3:  
-  ticker = raw_input("Welcome. Ready to trade? Pick a stock ticker: ")
+  ticker = raw_input("\n\n\n----------------------------------------------\nWelcome. Ready to trade? Pick a stock ticker: ")
   reuterObj = ReutersQuery()
   reuterVector = reuterObj.getQuery(ticker)
 
@@ -54,7 +60,6 @@ def main():
 
   outputObj = Output()
   outputObj.putOutput(ticker, metrics, yahooVector, merged)
-  #  index += 1
   print 'Thanks for trading with Vivek! Get money, get paid!'
 
 
