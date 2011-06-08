@@ -12,7 +12,7 @@ class Position:
     p = [] 
     ma = []
     r = []
-    pos = []
+    pos = []#tc tc!
     
     i = 0
     for date in s_p_r_ma:
