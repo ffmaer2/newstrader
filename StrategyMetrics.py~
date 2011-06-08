@@ -14,15 +14,7 @@ def getPercentageIn(strategyResults):
   percentageIn = float(countIn)/float(len(strategyResults)) 
   return countIn, percentageIn
 
-def getWinLoss(strategyResults):
-  win = 0
-  loss = 0
-  for result in strategyResults:
-    if result > 0:
-      win += 1
-    elif result < 0:
-      loss += 1
-  return win, loss
+
 
 def getAveWinLoss(strategyResults):
   win = 1

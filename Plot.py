@@ -11,15 +11,7 @@ def getP(merged):
   return p
 
 
-def equity(performance):
-  start = 100
-  e = []
-  i = 0
-  for a in performance:
-    e.append(start)
-    start += performance[i]*start
-    i += 1
-  return e
+
 
 
 def sent(s_p_r_ma_pos):

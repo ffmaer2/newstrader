@@ -22,10 +22,7 @@ class ReutersQuery:
 
     startSeg = startObj
 
-    while startSeg < endObj:
-      startSegStr = str(startSeg)[:10]
-      startSeg += timedelta(days=3)
-      endSegStr = str(startSeg)[:10]
+
 
       queryText = """select story_date_time, cast(take_text as text) from Reuters.dbo.news where related_rics like '%""" + ticker + """%' and language = 'en' and event_type = 'STORY_TAKE_OVERWRITE' and story_date_time >= '""" + startSegStr + """' and story_date_time <= '""" + endSegStr + """'"""
       
