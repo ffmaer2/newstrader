@@ -8,10 +8,7 @@ class Position:
     newdata = [(a, b) for a, b in s_p_r_ma.iteritems()]
     
     s_p_r_ma_pos = OrderedDict()
-    s = []
-    p = [] 
-    ma = []
-    r = []
+
     pos = []#tc tc!
     
     i = 0
